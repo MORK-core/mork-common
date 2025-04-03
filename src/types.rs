@@ -1,5 +1,6 @@
 use core::cell::UnsafeCell;
 use core::ops::{Index, IndexMut};
+use bitflags::bitflags;
 
 pub type JustResult = Result<(), ()>;
 pub type ResultWithErr<T> = Result<(), T>;
@@ -46,5 +47,13 @@ impl<T> SyncUnsafeCell<T> {
 
     pub fn get(&self) -> &T {
         unsafe { & *self.inner.get() }
+    }
+}
+
+bitflags! {
+    pub struct VMRights: u8 {
+        const R = 1 << 0;
+        const W = 1 << 1;
+        const X = 1 << 2;
     }
 }

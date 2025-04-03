@@ -1,4 +1,5 @@
 pub mod message_info;
+pub mod ipc_buffer;
 
 #[derive(Debug)]
 pub enum Syscall {

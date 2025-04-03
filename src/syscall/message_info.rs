@@ -14,6 +14,12 @@ impl MessageInfo {
         msg
     }
 
+    pub fn new_response(label: ResponseLabel) -> Self {
+        let mut msg = MessageInfo { words: [0; 1]};
+        msg.words[0] = 0 | ((label as usize) & 0xfffffffffffff) << 12;
+        msg
+    }
+
     pub fn from_word(word: usize) -> Self {
         let mut msg = MessageInfo { words: [0; 1]};
         msg.words[0] = word;
@@ -46,29 +52,22 @@ impl MessageInfo {
 
 pub enum InvocationLabel {
     InvalidInvocation = 0,
-    UntypedRetype = 1,
+    AllocObject = 1,
     TCBReadRegisters = 2,
     TCBWriteRegisters = 3,
     TCBCopyRegisters = 4,
     TCBConfigure = 5,
     TCBSetPriority = 6,
-    TCBSetMCPriority = 7,
-    TCBSetSchedParams = 8,
     TCBSetIPCBuffer = 9,
     TCBSetSpace = 10,
     TCBSuspend = 11,
     TCBResume = 12,
-    TCBBindNotification = 13,
-    TCBUnbindNotification = 14,
     TCBSetTLSBase = 15,
     CNodeRevoke = 16,
     CNodeDelete = 17,
-    CNodeCancelBadgedSends = 18,
     CNodeCopy = 19,
     CNodeMint = 20,
     CNodeMove = 21,
-    CNodeMutate = 22,
-    CNodeRotate = 23,
     CNodeSaveCaller = 24,
     IRQIssueIRQHandler = 25,
     IRQAckIRQ = 26,
@@ -83,11 +82,33 @@ pub enum InvocationLabel {
     NInvocationLabels = 35,
 }
 
+#[derive(Debug, PartialOrd, PartialEq)]
+pub enum ResponseLabel {
+    Success = InvocationLabel::NInvocationLabels as isize,
+    NotEnoughSpace,
+    ErrCapType,
+    PageTableMiss,
+    MappedAlready,
+    OutOfRange,
+    InvalidParam,
+    UnSupported,
+    UnknownFailure,
+}
+
 impl InvocationLabel {
     pub fn from_usize(label: usize) -> Self {
         assert!(label >= InvocationLabel::InvalidInvocation as usize && label < InvocationLabel::NInvocationLabels as usize);
         unsafe {
             core::mem::transmute::<u8, InvocationLabel>(label as u8)
+        }
+    }
+}
+
+impl ResponseLabel {
+    pub fn from_usize(label: usize) -> Self {
+        assert!(label >= ResponseLabel::Success as usize && label < ResponseLabel::UnknownFailure as usize);
+        unsafe {
+            core::mem::transmute::<u8, ResponseLabel>(label as u8)
         }
     }
 }
