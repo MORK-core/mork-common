@@ -53,7 +53,6 @@ impl MessageInfo {
 #[derive(Copy, Clone, Debug)]
 pub enum InvocationLabel {
     InvalidInvocation = 0,
-    AllocObject,
     TCBReadRegisters,
     TCBWriteRegisters,
     TCBCopyRegisters,
@@ -64,6 +63,7 @@ pub enum InvocationLabel {
     TCBSuspend,
     TCBResume,
     TCBSetTLSBase,
+    CNodeAlloc,
     CNodeRevoke,
     CNodeDelete,
     CNodeCopy,

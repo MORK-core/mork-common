@@ -4,12 +4,11 @@ pub const MAX_THREAD_PIRO: usize = 256;
 pub const MAX_CNODE_SIZE: usize = 240;
 pub const MAX_MESSAGE_LEN: usize = 512 - size_of::<MessageInfo>() / size_of::<usize>() - MAX_EXTRA_CAPS - 3;
 pub const MAX_EXTRA_CAPS: usize = 3;
-pub const NORMAL_PAGE_SIZE: usize = 4096;
-
+pub const PAGE_SIZE_NORMAL: usize = 4096;
+pub const PAGE_SIZE_2M: usize = 1 << 21;
 pub enum CNodeSlot {
     CapNull = 0,
     CapInitThread,
-    CapInitCNode,
     CapInitVSpace,
 }
 
