@@ -10,6 +10,7 @@ pub enum CNodeSlot {
     CapNull = 0,
     CapInitThread,
     CapInitVSpace,
+    CapParentCom,
 }
 
 pub enum ObjectType {
@@ -19,6 +20,7 @@ pub enum ObjectType {
     PageTable,
     Frame4K,
     Frame2M,
+    Notification,
     NTypes,
 }
 
