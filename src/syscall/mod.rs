@@ -12,6 +12,7 @@ pub enum Syscall {
     SysYield = -7,
     SysNBRecv = -8,
     SysDebugPutChar = -9,
+    SysDebugShutdown = -10,
 }
 
 impl Syscall {
@@ -26,6 +27,7 @@ impl Syscall {
             -7 => Some(Syscall::SysYield),
             -8 => Some(Syscall::SysNBRecv),
             -9 => Some(Syscall::SysDebugPutChar),
+            -10 => Some(Syscall::SysDebugShutdown),
             _ => None,
         }
     }
@@ -41,6 +43,7 @@ impl Syscall {
             Syscall::SysYield => -7,
             Syscall::SysNBRecv => -8,
             Syscall::SysDebugPutChar => -9,
+            Syscall::SysDebugShutdown => -10,
         }
     }
 }
