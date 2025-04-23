@@ -59,12 +59,24 @@ impl UserContextTrait for UserContext {
         self[UserRegister::NextIP] = value;
     }
 
+    fn set_arg0(&mut self, value: usize) {
+        self[UserRegister::a0] = value;
+    }
+
+    fn set_arg1(&mut self, value: usize) {
+        self[UserRegister::a1] = value;
+    }
+
     fn get_next_ip(&self) -> usize {
         self[UserRegister::NextIP]
     }
 
     fn set_sp(&mut self, value: usize) {
         self[UserRegister::sp] = value;
+    }
+
+    fn set_tls(&mut self, value: usize) {
+        self[UserRegister::tp] = value;
     }
 }
 
